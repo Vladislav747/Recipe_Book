@@ -108,9 +108,25 @@ client.connect();
   client.query('SELECT * FROM recipes', (err, result) => {
     console.log(res);
     res.render('index', {recipes: result.rows}); 
-   
+  
   });
 console.log('asd');
+});
+
+
+
+app.post('/add', function(req,res){
+//Коннектимся к базе recipes
+client.connect();
+  
+  client.query('INSERT INTO '+ db_table + ' (name, ingredients, directions) VALUES($1, $2, $3)',[req.body.name, req.body.ingredients, req.body.directions] , (err, result) => {
+    console.log(res);
+   
+ 
+
+   res.redirect('/');
+  });
+console.log('Did it');
 });
 
 //Server
