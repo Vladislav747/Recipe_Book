@@ -106,28 +106,47 @@ app.get('/', function(req, res){
 client.connect();
   
   client.query('SELECT * FROM recipes', (err, result) => {
-    console.log(res);
+    //console.log(res);
     res.render('index', {recipes: result.rows}); 
   
   });
-console.log('asd');
+console.log('Show old data from Databases');
 });
 
 
-
+//INSERT new data to database
 app.post('/add', function(req,res){
 //Коннектимся к базе recipes
 client.connect();
   
   client.query('INSERT INTO '+ db_table + ' (name, ingredients, directions) VALUES($1, $2, $3)',[req.body.name, req.body.ingredients, req.body.directions] , (err, result) => {
-    console.log(res);
+    //console.log(res);
    
  
 
    res.redirect('/');
   });
-console.log('Did it');
+console.log('Inserted data to databases');
 });
+
+
+//DELETE data from database
+app.delete('/delete/:id', function(req, res){
+//Коннектимся к базе recipes
+client.connect();
+  
+  client.query('DELETE FROM '+ db_table + ' WHERE id = $1',[req.params.id]);
+  
+   
+ 
+
+   res.sendStatus(200);
+   console.log('Deleted data to databases');
+  });
+
+
+
+
 
 //Server
 app.listen(3010, function(){
