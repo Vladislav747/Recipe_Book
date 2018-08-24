@@ -145,7 +145,21 @@ client.connect();
   });
 
 
-
+//EDIT new data to database
+app.post('/edit', function(req,res){
+    //Коннектимся к базе recipes
+    client.connect();
+      
+      client.query('UPDATE '+ db_table + ' SET name=$1, ingredients=$2, directions=$3 WHERE id=$4', [req.body.name, req.body.ingredients, req.body.directions, req.body.id]);
+        //console.log(res);
+       
+     
+    
+       res.redirect('/');
+     
+    console.log('Updated data to databases');
+    });
+    
 
 
 //Server
